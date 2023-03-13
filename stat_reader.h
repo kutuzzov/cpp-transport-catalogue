@@ -1,2 +1,7 @@
-// напишите решение с нуля
-// код сохраните в свой git-репозиторий
+#pragma once
+
+#include "transport_catalogue.h"
+
+#include <iostream>
+
+void ProcessRequests(std::ostream& out, TransportCatalogue& catalogue);
