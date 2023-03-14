@@ -5,26 +5,33 @@
 #include <cmath>
 
 void FillTransportCatalogue(std::istream& in, TransportCatalogue& catalogue) {
+    std::vector<std::string> query_bus;
     size_t requests_count;
+
     in >> requests_count;
     for (size_t i = 0; i < requests_count; ++i) {
         std::string keyword, line;
-        in >> keyword;
-        std::getline(in, line);
+        in >> keyword; 
         if (keyword == "Stop") {
+            std::getline(in, line);
             std::string stop_name = line.substr(1, line.find_first_of(':') - line.find_first_of(' ') - 1);
             double lat = std::stod(line.substr(line.find_first_of(':') + 2, 9));
             double lng = std::stod(line.substr(line.find_first_of(',') + 2, 9));
             Coordinates stop_coordinates = { lat, lng };
             catalogue.AddStop(stop_name, stop_coordinates);
         }
-        else if (keyword == "Bus") {
-            std::string route_number = line.substr(1, line.find_first_of(':') - 1);
-            line.erase(0, line.find_first_of(':') + 2);
-            auto [route_stops, circular_route] = FillRoute(line);
-            catalogue.AddRoute(route_number, route_stops, circular_route);
-            route_stops.clear();
+        if (keyword == "Bus") {
+            std::getline(in, line);
+            query_bus.push_back(line);
         }
+    }
+
+    for (auto& bus_ : query_bus) {
+        std::string route_number = bus_.substr(1, bus_.find_first_of(':') - 1);
+        bus_.erase(0, bus_.find_first_of(':') + 2);
+        auto [route_stops, circular_route] = FillRoute(bus_);
+        catalogue.AddRoute(route_number, route_stops, circular_route);
+        route_stops.clear();
     }
 }
 

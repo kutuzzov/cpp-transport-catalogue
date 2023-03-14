@@ -9,6 +9,7 @@
 #include <stdexcept>
 #include <optional>
 #include <unordered_set>
+#include <set>
 
 struct Bus {
     std::string number;
@@ -19,6 +20,7 @@ struct Bus {
 struct Stop {
     std::string name;
     Coordinates coordinates;
+    std::set<std::string> buses;
 };
 
 struct RouteInfo {
@@ -34,7 +36,8 @@ public:
     const Bus* FindRoute(const std::string& route_number) const;
     const Stop* FindStop(const std::string& stop_name) const;
     const RouteInfo RouteInformation(const std::string& route_number) const;
-    size_t UniqueStopsCount(const std::string& route_number) const ;
+    size_t UniqueStopsCount(const std::string& route_number) const;
+    const std::set<std::string> GetBusesOnStop(const std::string& stop_name) const;
 
 private:
     std::deque<Bus> all_buses_;
