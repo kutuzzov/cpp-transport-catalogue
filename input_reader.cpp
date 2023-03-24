@@ -1,11 +1,13 @@
 #include "input_reader.h"
 
-void FillTransportCatalogue(TransportCatalogue& catalogue) {
+namespace transport {
+
+void FillCatalogue(Catalogue& catalogue) {
     std::vector<std::string> query_bus;
     std::vector<std::string> query_stop;
     std::vector<std::string> query_stop_distances;
     size_t requests_count;
-
+    
     std::cin >> requests_count;
     for (size_t i = 0; i < requests_count; ++i) {
         std::string keyword, line;
@@ -20,18 +22,20 @@ void FillTransportCatalogue(TransportCatalogue& catalogue) {
     }
     query_stop_distances = query_stop;
     for (auto& stop_ : query_stop) {
-        Stop stop = FillStop(stop_);
+        Stop stop = detail::FillStop(stop_);
         catalogue.AddStop(stop);
     }
     for (auto& stop_ : query_stop_distances) {
-        AddStopDistances(stop_, catalogue);
+        detail::FillStopDistances(stop_, catalogue);
     }
     for (auto& bus_ : query_bus) {
-        Bus bus = FillRoute(bus_);
+        Bus bus = detail::FillRoute(bus_);
         catalogue.AddRoute(bus);
         bus = {};
     }
 }
+
+namespace detail {
 
 Bus FillRoute(std::string& line) {
     Bus bus;
@@ -49,11 +53,11 @@ Bus FillRoute(std::string& line) {
     stop_name = line.substr(0, line.npos - 1);
     route_stops.push_back(stop_name);
     if (pos == '>') circular_route = true;
-
+    
     bus.number = route_number;
     bus.stops = route_stops;
     bus.circular_route = circular_route;
-
+    
     return bus;
 }
 
@@ -71,20 +75,20 @@ Stop FillStop(std::string& line) {
         lng = std::stod(line.substr(0, line.find_first_of(',')));
         line.erase(0, line.find_first_of(',') + 2);
     }
-    Coordinates stop_coordinates = { lat, lng };
-
+    geo::Coordinates stop_coordinates = { lat, lng };
+    
     stop.name = stop_name;
     stop.coordinates = stop_coordinates;
     stop.buses = {};
-
+    
     return stop;
 }
 
-void AddStopDistances(std::string& line, TransportCatalogue& catalogue) {
+void FillStopDistances(std::string& line, Catalogue& catalogue) {
     if (!line.empty()) {
         std::string stop_from_name = FillStop(line).name;
         Stop* from = catalogue.FindStop(stop_from_name);
-
+        
         while (!line.empty()) {
             int distanse = 0;
             std::string stop_to_name;
@@ -111,3 +115,7 @@ void AddStopDistances(std::string& line, TransportCatalogue& catalogue) {
         }
     }
 }
+
+} // namespace detail
+
+} // namespace transport

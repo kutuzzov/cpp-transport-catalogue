@@ -4,7 +4,16 @@
 
 #include <iostream>
 
-void FillTransportCatalogue(TransportCatalogue& catalogue);
+namespace transport {
+
+void FillCatalogue(Catalogue& catalogue);
+
+namespace detail {
+
 Bus FillRoute(std::string& line);
 Stop FillStop(std::string& line);
-void AddStopDistances(std::string& line, TransportCatalogue& catalogue);
+void FillStopDistances(std::string& line, Catalogue& catalogue);
+
+} // namespace detail
+
+} // namespace transport

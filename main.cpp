@@ -1,8 +1,10 @@
 #include "input_reader.h"
 #include "stat_reader.h"
 
+using namespace transport;
+
 int main() {
-    TransportCatalogue catalogue;
-    FillTransportCatalogue(catalogue);
+    Catalogue catalogue;
+    FillCatalogue(catalogue);
     ProcessRequests(catalogue);
 }
