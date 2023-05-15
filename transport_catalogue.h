@@ -1,6 +1,7 @@
 #pragma once
 
 #include "geo.h"
+#include "domain.h"
 
 #include <iostream>
 #include <deque>
@@ -13,25 +14,6 @@
 #include <set>
 
 namespace transport {
-
-struct Stop {
-    std::string name;
-    geo::Coordinates coordinates;
-    std::set<std::string> buses_by_stop;
-};
-
-struct Bus {
-    std::string number;
-    std::vector<const Stop*> stops;
-    bool is_circle;
-};
-
-struct BusStat {
-    size_t stops_count;
-    size_t unique_stops_count;
-    double route_length;
-    double curvature;
-};
 
 class Catalogue {
 public:
@@ -47,9 +29,7 @@ public:
     void AddRoute(std::string_view bus_number, const std::vector<const Stop*> stops, bool is_circle);
     const Bus* FindRoute(std::string_view bus_number) const;
     const Stop* FindStop(std::string_view stop_name) const;
-    std::optional<BusStat> GetBusStat(const std::string_view& bus_number) const;
     size_t UniqueStopsCount(std::string_view bus_number) const;
-    const std::set<std::string> GetBusesByStop(std::string_view stop_name) const;
     void SetDistance(const Stop* from, const Stop* to, const int distance);
     int GetDistance(const Stop* from, const Stop* to) const;
 
