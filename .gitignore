@@ -366,3 +366,6 @@ MigrationBackup/
 FodyWeavers.xsd
 /test-transport-catalogue.sln
 /test-transport-catalogue.vcxproj.filters
+/input.json
+/.gitignore
+/output.txt
