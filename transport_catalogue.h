@@ -12,6 +12,7 @@
 #include <optional>
 #include <unordered_set>
 #include <set>
+#include <map>
 
 namespace transport {
 
@@ -32,6 +33,7 @@ public:
     size_t UniqueStopsCount(std::string_view bus_number) const;
     void SetDistance(const Stop* from, const Stop* to, const int distance);
     int GetDistance(const Stop* from, const Stop* to) const;
+    const std::map<std::string_view, const Bus*> GetSortedAllBuses() const;
 
 private:
     std::deque<Bus> all_buses_;

@@ -8,10 +8,9 @@
 
 #include "request_handler.h"
 
-void RequestHandler::ProcessRequests() const {
+void RequestHandler::ProcessRequests(const json::Node& stat_requests) const {
     json::Array result;
-    const json::Array& arr = requests_.GetStatRequests().AsArray();
-    for (auto& request : arr) {
+    for (auto& request : stat_requests.AsArray()) {
         const auto& request_map = request.AsMap();
         const auto& type = request_map.at("type").AsString();
         if (type == "Stop") {
@@ -21,6 +20,7 @@ void RequestHandler::ProcessRequests() const {
             result.push_back(PrintRoute(request_map).AsMap());
         }
     }
+    
     json::Print(json::Document{ result }, std::cout);
 }
 
@@ -37,6 +37,7 @@ const json::Node RequestHandler::PrintRoute(const json::Dict& request_map) const
         result["stop_count"] = static_cast<int>(GetBusStat(route_number)->stops_count);
         result["unique_stop_count"] = static_cast<int>(GetBusStat(route_number)->unique_stops_count);
     }
+    
     return json::Node{ result };
 }
 
@@ -58,7 +59,7 @@ const json::Node RequestHandler::PrintStop(const json::Dict& request_map) const 
     return json::Node{ result };
 }
 
-std::optional<transport::BusStat> RequestHandler::GetBusStat(const std::string_view& bus_number) const {
+std::optional<transport::BusStat> RequestHandler::GetBusStat(const std::string_view bus_number) const {
     transport::BusStat bus_stat{};
     const transport::Bus* bus = catalogue_.FindRoute(bus_number);
 
@@ -93,4 +94,8 @@ std::optional<transport::BusStat> RequestHandler::GetBusStat(const std::string_v
 
 const std::set<std::string> RequestHandler::GetBusesByStop(std::string_view stop_name) const {
     return catalogue_.FindStop(stop_name)->buses_by_stop;
+}
+
+svg::Document RequestHandler::RenderMap() const {
+    return renderer_.GetSVG(catalogue_.GetSortedAllBuses());
 }
