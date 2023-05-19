@@ -14,7 +14,7 @@
 int main() {
 #ifdef __APPLE__
     freopen("input.json", "r", stdin);
-    //freopen("output.svg", "w", stdout);
+    freopen("output.svg", "w", stdout);
     //freopen("output.txt", "w", stdout);
     //freopen("error-output.txt", "w", stderr);
 #endif

@@ -89,8 +89,8 @@ struct RenderSettings {
     double width = 0.0;
     double height = 0.0;
     double padding = 0.0;
-    double line_width = 0.0;
     double stop_radius = 0.0;
+    double line_width = 0.0;
     int bus_label_font_size = 0;
     svg::Point bus_label_offset = { 0.0, 0.0 };
     int stop_label_font_size = 0;
@@ -107,6 +107,9 @@ public:
     {}
     
     std::vector<svg::Polyline> GetRouteLines(const std::map<std::string_view, const transport::Bus*>& buses, const SphereProjector& sp) const;
+    std::vector<svg::Text> GetBusLabel(const std::map<std::string_view, const transport::Bus*>& buses, const SphereProjector& sp) const;
+    std::vector<svg::Circle> GetStopsSymbols(const std::map<std::string_view, const transport::Stop*>& stops, const SphereProjector& sp) const;
+    std::vector<svg::Text> GetStopsLabels(const std::map<std::string_view, const transport::Stop*>& stops, const SphereProjector& sp) const;
     
     svg::Document GetSVG(const std::map<std::string_view, const transport::Bus*>& buses) const;
     
