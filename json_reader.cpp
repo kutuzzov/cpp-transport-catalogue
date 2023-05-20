@@ -40,8 +40,6 @@ void JsonReader::FillCatalogue(transport::Catalogue& catalogue) {
             catalogue.AddRoute(bus_number, stops, circular_route);
         }
     }
-    
-    //FillRenderSettings(GetRenderSettings().AsMap());
 }
 
 std::tuple<std::string_view, geo::Coordinates, std::map<std::string_view, int>> JsonReader::FillStop(const json::Dict& request_map) const {
