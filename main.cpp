@@ -14,7 +14,7 @@
 int main() {
 #ifdef __APPLE__
     freopen("input.json", "r", stdin);
-    freopen("output.svg", "w", stdout);
+    freopen("output.json", "w", stdout);
     //freopen("output.txt", "w", stdout);
     //freopen("error-output.txt", "w", stderr);
 #endif
@@ -24,11 +24,10 @@ int main() {
     
     json_doc.FillCatalogue(catalogue);
     
-    //const auto& stat_requests = json_doc.GetStatRequests();
+    const auto& stat_requests = json_doc.GetStatRequests();
     const auto& render_settings = json_doc.GetRenderSettings().AsMap();
     const auto& renderer = json_doc.FillRenderSettings(render_settings);
     
     RequestHandler rh(catalogue, renderer);
-    //rh.ProcessRequests(stat_requests);
-    rh.RenderMap().Render(std::cout);
+    rh.ProcessRequests(stat_requests);
 }
