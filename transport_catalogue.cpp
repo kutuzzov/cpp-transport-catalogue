@@ -43,4 +43,12 @@ int Catalogue::GetDistance(const Stop* from, const Stop* to) const {
     else return 0;
 }
 
+const std::map<std::string_view, const Bus*> Catalogue::GetSortedAllBuses() const {
+    std::map<std::string_view, const Bus*> result;
+    for (const auto& bus : busname_to_bus_) {
+        result.emplace(bus);
+    }
+    return result;
+}
+
 } // namespace transport

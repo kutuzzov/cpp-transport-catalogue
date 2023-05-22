@@ -7,6 +7,7 @@
 
 #include "json.h"
 #include "transport_catalogue.h"
+#include "map_renderer.h"
 
 #include <iostream>
 
@@ -18,8 +19,10 @@ public:
 
     const json::Node& GetBaseRequests() const;
     const json::Node& GetStatRequests() const;
+    const json::Node& GetRenderSettings() const;
 
     void FillCatalogue(transport::Catalogue& catalogue);
+    renderer::MapRenderer FillRenderSettings(const json::Dict& request_map) const;
 
 private:
     json::Document input_;
