@@ -317,4 +317,4 @@ private:
     std::vector<std::unique_ptr<Object>> objects_;
 };
 
-}  // namespace svg
+}  // namespacе svg

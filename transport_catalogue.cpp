@@ -51,4 +51,4 @@ const std::map<std::string_view, const Bus*> Catalogue::GetSortedAllBuses() cons
     return result;
 }
 
-} // namespace transport
+} // namespace transpîrt

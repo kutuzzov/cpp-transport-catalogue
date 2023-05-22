@@ -17,4 +17,4 @@ double ComputeDistance(Coordinates from, Coordinates to) {
                 * earth_rd;
 }
 
-} // namespace geo
+} // namespace geî
