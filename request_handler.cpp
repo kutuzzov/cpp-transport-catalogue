@@ -13,13 +13,11 @@ void RequestHandler::ProcessRequests(const json::Node& stat_requests) const {
     for (auto& request : stat_requests.AsArray()) {
         const auto& request_map = request.AsMap();
         const auto& type = request_map.at("type").AsString();
-        if (type == "Stop") {
-            result.push_back(PrintStop(request_map).AsMap());
-        }
-        if (type == "Bus") {
-            result.push_back(PrintRoute(request_map).AsMap());
-        }
+        if (type == "Stop") result.push_back(PrintStop(request_map).AsMap());
+        if (type == "Bus") result.push_back(PrintRoute(request_map).AsMap());
+        if (type == "Map") result.push_back(PrintMap(request_map).AsMap());
     }
+    
     json::Print(json::Document{ result }, std::cout);
 }
 
@@ -36,6 +34,7 @@ const json::Node RequestHandler::PrintRoute(const json::Dict& request_map) const
         result["stop_count"] = static_cast<int>(GetBusStat(route_number)->stops_count);
         result["unique_stop_count"] = static_cast<int>(GetBusStat(route_number)->unique_stops_count);
     }
+    
     return json::Node{ result };
 }
 
@@ -57,7 +56,18 @@ const json::Node RequestHandler::PrintStop(const json::Dict& request_map) const 
     return json::Node{ result };
 }
 
-std::optional<transport::BusStat> RequestHandler::GetBusStat(const std::string_view& bus_number) const {
+const json::Node RequestHandler::PrintMap(const json::Dict& request_map) const {
+    json::Dict result;
+    result["request_id"] = request_map.at("id").AsInt();
+    std::ostringstream strm;
+    svg::Document map = RenderMap();
+    map.Render(strm);
+    result["map"] = strm.str();
+    
+    return json::Node{ result };
+}
+
+std::optional<transport::BusStat> RequestHandler::GetBusStat(const std::string_view bus_number) const {
     transport::BusStat bus_stat{};
     const transport::Bus* bus = catalogue_.FindRoute(bus_number);
 

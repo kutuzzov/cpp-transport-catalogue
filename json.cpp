@@ -287,33 +287,33 @@ bool Node::IsMap() const {
 }
 
 int Node::AsInt() const {
-    if (!IsInt()) throw std::logic_error("wrong type");
+    if (!IsInt()) throw ParsingError("not int");
     return std::get<int>(value_);
 }
 
 bool Node::AsBool() const {
-    if (!IsBool()) throw std::logic_error("wrong type");
+    if (!IsBool()) throw ParsingError("not bool");
     return std::get<bool>(value_);
 }
 
 double Node::AsDouble() const {
-    if (!IsDouble()) throw std::logic_error("wrong type");
+    if (!IsDouble()) throw ParsingError("not double");
     if (IsInt()) return static_cast<double>(std::get<int>(value_));
     return std::get<double>(value_);
 }
 
 const std::string& Node::AsString() const {
-    if (!IsString()) throw std::logic_error("wrong type");
+    if (!IsString()) throw ParsingError("not string");
     return std::get<std::string>(value_);
 }
 
 const Array& Node::AsArray() const {
-    if (!IsArray()) throw std::logic_error("wrong type");
+    if (!IsArray()) throw ParsingError("not array");
     return std::get<Array>(value_);
 }
 
 const Dict& Node::AsMap() const {
-    if (!IsMap()) throw std::logic_error("wrong type");
+    if (!IsMap()) throw ParsingError("wrong map");
     return std::get<Dict>(value_);
 }
 

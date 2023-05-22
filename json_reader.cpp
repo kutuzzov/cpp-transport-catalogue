@@ -107,7 +107,7 @@ renderer::MapRenderer JsonReader::FillRenderSettings(const json::Dict& request_m
         } else throw std::logic_error("wrong underlayer colortype");
     } else throw std::logic_error("wrong underlayer color");
     
-    render_settings.underlayer_width = request_map.at("underlayer_width").AsInt();
+    render_settings.underlayer_width = request_map.at("underlayer_width").AsDouble();
     
     const json::Array& color_palette = request_map.at("color_palette").AsArray();
     for (const auto& color_element : color_palette) {
