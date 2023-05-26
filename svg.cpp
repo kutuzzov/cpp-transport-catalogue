@@ -161,4 +161,4 @@ void Document::Render(std::ostream& out) const {
     out << "</svg>"sv;
 }
 
-}  // namespacе svg
+}  // namespace svg

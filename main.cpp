@@ -10,7 +10,7 @@ int main() {
     const auto& stat_requests = json_doc.GetStatRequests();
     const auto& render_settings = json_doc.GetRenderSettings().AsMap();
     const auto& renderer = json_doc.FillRenderSettings(render_settings);
-    
+
     RequestHandler rh(catalogue, renderer);
-    rh.ProcessRequests(stat_requests);
+    json_doc.ProcessRequests(stat_requests, rh);
 }
