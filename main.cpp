@@ -2,12 +2,6 @@
 #include "request_handler.h"
 
 int main() {
-#ifdef __APPLE__
-    freopen("input.json", "r", stdin);
-    freopen("output.json", "w", stdout);
-    //freopen("error-output.txt", "w", stderr);
-#endif
-    
     transport::Catalogue catalogue;
     JsonReader json_doc(std::cin);
     
