@@ -29,19 +29,6 @@ void JsonReader::ProcessRequests(const json::Node& stat_requests, RequestHandler
     json::Print(json::Document{ result }, std::cout);
 }
 
-void JsonReader::ProcessRequests(const json::Node& stat_requests, RequestHandler& rh) const {
-    json::Array result;
-    for (auto& request : stat_requests.AsArray()) {
-        const auto& request_map = request.AsMap();
-        const auto& type = request_map.at("type").AsString();
-        if (type == "Stop") result.push_back(PrintStop(request_map, rh).AsMap());
-        if (type == "Bus") result.push_back(PrintRoute(request_map, rh).AsMap());
-        if (type == "Map") result.push_back(PrintMap(request_map, rh).AsMap());
-    }
-
-    json::Print(json::Document{ result }, std::cout);
-}
-
 void JsonReader::FillCatalogue(transport::Catalogue& catalogue) {
     const json::Array& arr = GetBaseRequests().AsArray();
     for (auto& request_stops : arr) {
