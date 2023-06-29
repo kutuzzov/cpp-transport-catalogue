@@ -8,10 +8,10 @@ namespace json {
 
 class Builder {
 public:
-    class DictItemContext;
-    class DictKeyContext;
-    class ArrayItemContext;
-    
+class DictItemContext;
+class DictKeyContext;
+class ArrayItemContext;
+
 class Builder {
 public:
     Builder();
@@ -30,7 +30,7 @@ private:
     std::optional<std::string> key_{ std::nullopt };
 };
 
-class Builder::DictItemContext {
+class DictItemContext {
 public:
     DictItemContext(Builder& builder);
 
@@ -41,7 +41,7 @@ private:
     Builder& builder_;
 };
 
-class Builder::ArrayItemContext {
+class ArrayItemContext {
 public:
     ArrayItemContext(Builder& builder);
 
@@ -54,14 +54,14 @@ private:
     Builder& builder_;
 };
 
-class Builder::DictKeyContext {
+class DictKeyContext {
 public:
     DictKeyContext(Builder& builder);
-    
+
     DictItemContext Value(Node::Value value);
     ArrayItemContext StartArray();
     DictItemContext StartDict();
-    
+
 private:
     Builder& builder_;
 };
