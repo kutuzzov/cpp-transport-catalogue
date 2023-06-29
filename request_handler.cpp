@@ -2,6 +2,7 @@
 
 std::optional<transport::BusStat> RequestHandler::GetBusStat(const std::string_view bus_number) const {
     transport::BusStat bus_stat{};
+    if (!catalogue_.FindRoute(bus_number)) return bus_stat;
     const transport::Bus* bus = catalogue_.FindRoute(bus_number);
 
     if (!bus) throw std::invalid_argument("bus not found");
@@ -33,8 +34,9 @@ std::optional<transport::BusStat> RequestHandler::GetBusStat(const std::string_v
     return bus_stat;
 }
 
-const std::set<std::string> RequestHandler::GetBusesByStop(std::string_view stop_name) const {
-    return catalogue_.FindStop(stop_name)->buses_by_stop;
+const std::optional<std::set<std::string>> RequestHandler::GetBusesByStop(std::string_view stop_name) const {
+    if (catalogue_.FindStop(stop_name)) return catalogue_.FindStop(stop_name)->buses_by_stop;
+    return {};
 }
 
 bool RequestHandler::IsBusNumber(const std::string_view bus_number) const {

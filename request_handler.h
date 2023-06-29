@@ -15,7 +15,7 @@ public:
     }
 
     std::optional<transport::BusStat> GetBusStat(const std::string_view bus_number) const;
-    const std::set<std::string> GetBusesByStop(std::string_view stop_name) const;
+    const std::optional<std::set<std::string>> GetBusesByStop(std::string_view stop_name) const;
     bool IsBusNumber(const std::string_view bus_number) const;
     bool IsStopName(const std::string_view stop_name) const;
 
