@@ -4,7 +4,6 @@
 #include "transport_catalogue.h"
 #include "map_renderer.h"
 #include "request_handler.h"
-#include "json_builder.h"
 
 #include <iostream>
 
@@ -23,9 +22,9 @@ public:
     void FillCatalogue(transport::Catalogue& catalogue);
     renderer::MapRenderer FillRenderSettings(const json::Dict& request_map) const;
 
-    const json::Dict PrintRoute(const json::Dict& request_map, RequestHandler& rh) const;
-    const json::Dict PrintStop(const json::Dict& request_map, RequestHandler& rh) const;
-    const json::Dict PrintMap(const json::Dict& request_map, RequestHandler& rh) const;
+    const json::Node PrintRoute(const json::Dict& request_map, RequestHandler& rh) const;
+    const json::Node PrintStop(const json::Dict& request_map, RequestHandler& rh) const;
+    const json::Node PrintMap(const json::Dict& request_map, RequestHandler& rh) const;
 
 private:
     json::Document input_;

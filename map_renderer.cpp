@@ -1,9 +1,3 @@
-/*
- * В этом файле вы можете разместить код, отвечающий за визуализацию карты маршрутов в формате SVG.
- * Визуализация маршрутов вам понадобится во второй части итогового проекта.
- * Пока можете оставить файл пустым.
- */
-
 #include "map_renderer.h"
 
 namespace renderer {
@@ -28,13 +22,13 @@ std::vector<svg::Polyline> MapRenderer::GetRouteLines(const std::map<std::string
         line.SetStrokeWidth(render_settings_.line_width);
         line.SetStrokeLineCap(svg::StrokeLineCap::ROUND);
         line.SetStrokeLineJoin(svg::StrokeLineJoin::ROUND);
-        
+
         if (color_num < (render_settings_.color_palette.size() - 1)) ++color_num;
         else color_num = 0;
-        
+
         result.push_back(line);
     }
-    
+
     return result;
 }
 
@@ -54,7 +48,7 @@ std::vector<svg::Text> MapRenderer::GetBusLabel(const std::map<std::string_view,
         text.SetFillColor(render_settings_.color_palette[color_num]);
         if (color_num < (render_settings_.color_palette.size() - 1)) ++color_num;
         else color_num = 0;
-        
+
         underlayer.SetPosition(sp(bus->stops[0]->coordinates));
         underlayer.SetOffset(render_settings_.bus_label_offset);
         underlayer.SetFontSize(render_settings_.bus_label_font_size);
@@ -66,21 +60,21 @@ std::vector<svg::Text> MapRenderer::GetBusLabel(const std::map<std::string_view,
         underlayer.SetStrokeWidth(render_settings_.underlayer_width);
         underlayer.SetStrokeLineCap(svg::StrokeLineCap::ROUND);
         underlayer.SetStrokeLineJoin(svg::StrokeLineJoin::ROUND);
-        
+
         result.push_back(underlayer);
         result.push_back(text);
-        
+
         if (bus->is_circle == false && bus->stops[0] != bus->stops[bus->stops.size() - 1]) {
             svg::Text text2 {text};
             svg::Text underlayer2 {underlayer};
             text2.SetPosition(sp(bus->stops[bus->stops.size() - 1]->coordinates));
             underlayer2.SetPosition(sp(bus->stops[bus->stops.size() - 1]->coordinates));
-            
+
             result.push_back(underlayer2);
             result.push_back(text2);
         }
     }
-    
+
     return result;
 }
 
@@ -91,10 +85,10 @@ std::vector<svg::Circle> MapRenderer::GetStopsSymbols(const std::map<std::string
         symbol.SetCenter(sp(stop->coordinates));
         symbol.SetRadius(render_settings_.stop_radius);
         symbol.SetFillColor("white");
-        
+
         result.push_back(symbol);
     }
-    
+
     return result;
 }
 
@@ -109,7 +103,7 @@ std::vector<svg::Text> MapRenderer::GetStopsLabels(const std::map<std::string_vi
         text.SetFontFamily("Verdana");
         text.SetData(stop->name);
         text.SetFillColor("black");
-        
+
         underlayer.SetPosition(sp(stop->coordinates));
         underlayer.SetOffset(render_settings_.stop_label_offset);
         underlayer.SetFontSize(render_settings_.stop_label_font_size);
@@ -120,11 +114,11 @@ std::vector<svg::Text> MapRenderer::GetStopsLabels(const std::map<std::string_vi
         underlayer.SetStrokeWidth(render_settings_.underlayer_width);
         underlayer.SetStrokeLineCap(svg::StrokeLineCap::ROUND);
         underlayer.SetStrokeLineJoin(svg::StrokeLineJoin::ROUND);
-        
+
         result.push_back(underlayer);
         result.push_back(text);
     }
-    
+
     return result;
 }
 
@@ -132,7 +126,7 @@ svg::Document MapRenderer::GetSVG(const std::map<std::string_view, const transpo
     svg::Document result;
     std::vector<geo::Coordinates> route_stops_coord;
     std::map<std::string_view, const transport::Stop*> all_stops;
-    
+
     for (const auto& [bus_number, bus] : buses) {
         if (bus->stops.empty()) continue;
         for (const auto& stop : bus->stops) {
@@ -141,7 +135,7 @@ svg::Document MapRenderer::GetSVG(const std::map<std::string_view, const transpo
         }
     }
     SphereProjector sp(route_stops_coord.begin(), route_stops_coord.end(), render_settings_.width, render_settings_.height, render_settings_.padding);
-    
+
     for (const auto& line : GetRouteLines(buses, sp)) result.Add(line);
     for (const auto& text : GetBusLabel(buses, sp)) result.Add(text);
     for (const auto& circle : GetStopsSymbols(all_stops, sp)) result.Add(circle);

@@ -143,4 +143,4 @@ Document Load(std::istream& input);
 
 void Print(const Document& doc, std::ostream& output);
 
-}  // namespace json
+} // namespace json

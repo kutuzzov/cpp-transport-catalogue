@@ -309,12 +309,12 @@ class Document : public ObjectContainer {
 public:
     // Добавляет в svg-документ объект-наследник svg::Object
     void AddPtr(std::unique_ptr<Object>&& obj) override;
-    
+
     // Выводит в ostream svg-представление документа
     void Render(std::ostream& out) const;
-    
+
 private:
     std::vector<std::unique_ptr<Object>> objects_;
 };
 
-}  // namespace svg
+} // namespace svg

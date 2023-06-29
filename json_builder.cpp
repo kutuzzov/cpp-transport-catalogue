@@ -7,7 +7,7 @@ Builder::Builder() {
     nodes_stack_.emplace_back(root_ptr);
 }
 
-DictKeyContext Builder::Key(std::string key) {
+Builder::DictKeyContext Builder::Key(std::string key) {
     auto* top_node = nodes_stack_.back();
 
     if (top_node->IsDict() && !key_) key_ = std::move(key);
@@ -40,7 +40,7 @@ Builder& Builder::Value(Node::Value value) {
     return *this;
 }
 
-DictItemContext Builder::StartDict() {
+Builder::DictItemContext Builder::StartDict() {
     auto* top_node = nodes_stack_.back();
 
     if (top_node->IsDict()) {
@@ -72,7 +72,7 @@ Builder& Builder::EndDict() {
     return *this;
 }
 
-ArrayItemContext Builder::StartArray() {
+Builder::ArrayItemContext Builder::StartArray() {
     auto* top_node = nodes_stack_.back();
 
     if (top_node->IsDict()) {
@@ -120,51 +120,51 @@ Node Builder::GetNode(Node::Value value) {
     return {};
 }
 
-DictItemContext::DictItemContext(Builder& builder)
+Builder::DictItemContext::DictItemContext(Builder& builder)
     : builder_(builder)
 {}
 
-DictKeyContext DictItemContext::Key(std::string key) {
+Builder::DictKeyContext Builder::DictItemContext::Key(std::string key) {
     return builder_.Key(key);
 }
 
-Builder& DictItemContext::EndDict() {
+Builder& Builder::DictItemContext::EndDict() {
     return builder_.EndDict();
 }
 
-ArrayItemContext::ArrayItemContext(Builder& builder)
+Builder::ArrayItemContext::ArrayItemContext(Builder& builder)
     : builder_(builder)
 {}
 
-ArrayItemContext ArrayItemContext::Value(Node::Value value) {
+Builder::ArrayItemContext Builder::ArrayItemContext::Value(Node::Value value) {
     return ArrayItemContext(builder_.Value(value));
 }
 
-DictItemContext ArrayItemContext::StartDict() {
+Builder::DictItemContext Builder::ArrayItemContext::StartDict() {
     return builder_.StartDict();
 }
 
-ArrayItemContext ArrayItemContext::StartArray() {
+Builder::ArrayItemContext Builder::ArrayItemContext::StartArray() {
     return builder_.StartArray();
 }
 
-Builder& ArrayItemContext::EndArray() {
+Builder& Builder::ArrayItemContext::EndArray() {
     return builder_.EndArray();
 }
 
-DictKeyContext::DictKeyContext(Builder& builder)
+Builder::DictKeyContext::DictKeyContext(Builder& builder)
     : builder_(builder)
 {}
 
-DictItemContext DictKeyContext::Value(Node::Value value) {
+Builder::DictItemContext Builder::DictKeyContext::Value(Node::Value value) {
     return DictItemContext(builder_.Value(value));
 }
 
-ArrayItemContext DictKeyContext::StartArray() {
+Builder::ArrayItemContext Builder::DictKeyContext::StartArray() {
     return builder_.StartArray();
 }
 
-DictItemContext DictKeyContext::StartDict() {
+Builder::DictItemContext Builder::DictKeyContext::StartDict() {
     return builder_.StartDict();
 }
 

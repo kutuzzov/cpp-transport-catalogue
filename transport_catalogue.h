@@ -43,4 +43,4 @@ private:
     std::unordered_map<std::pair<const Stop*, const Stop*>, int, StopDistancesHasher> stop_distances_;
 };
 
-} // namespace transport
+}  // namespace transport

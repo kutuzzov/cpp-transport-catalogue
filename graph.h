@@ -72,4 +72,4 @@ typename DirectedWeightedGraph<Weight>::IncidentEdgesRange
     return ranges::AsRange(incidence_lists_.at(vertex));
 }
 
-}  // namespace graph
+} // namespace graph
