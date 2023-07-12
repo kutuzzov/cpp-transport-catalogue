@@ -51,4 +51,12 @@ const std::map<std::string_view, const Bus*> Catalogue::GetSortedAllBuses() cons
     return result;
 }
 
+const std::map<std::string_view, const Stop*> Catalogue::GetSortedAllStops() const {
+    std::map<std::string_view, const Stop*> result;
+    for (const auto& stop : stopname_to_stop_) {
+        result.emplace(stop);
+    }
+    return result;
+}
+
 }  // namespace transport

@@ -12,6 +12,8 @@ using EdgeId = size_t;
 
 template <typename Weight>
 struct Edge {
+    std::string name;
+    size_t quality;
     VertexId from;
     VertexId to;
     Weight weight;

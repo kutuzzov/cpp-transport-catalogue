@@ -34,6 +34,7 @@ public:
     void SetDistance(const Stop* from, const Stop* to, const int distance);
     int GetDistance(const Stop* from, const Stop* to) const;
     const std::map<std::string_view, const Bus*> GetSortedAllBuses() const;
+    const std::map<std::string_view, const Stop*> GetSortedAllStops() const;
 
 private:
     std::deque<Bus> all_buses_;
