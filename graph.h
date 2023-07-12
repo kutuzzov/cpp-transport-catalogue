@@ -4,6 +4,7 @@
 
 #include <cstdlib>
 #include <vector>
+#include <string>
 
 namespace graph {
 
