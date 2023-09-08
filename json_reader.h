@@ -17,6 +17,7 @@ public:
     const json::Node& GetStatRequests() const;
     const json::Node& GetRenderSettings() const;
     const json::Node& GetRoutingSettings() const;
+    const json::Node& GetSerializationSettings() const;
 
     void ProcessRequests(const json::Node& stat_requests, RequestHandler& rh) const;
 

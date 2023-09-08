@@ -59,4 +59,7 @@ const std::map<std::string_view, const Stop*> Catalogue::GetSortedAllStops() con
     return result;
 }
 
+const std::unordered_map<std::pair<const Stop*, const Stop*>, int, Catalogue::StopDistancesHasher> Catalogue::GetStopDistances() const {
+    return stop_distances_;
+}
 }  // namespace transport

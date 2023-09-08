@@ -98,6 +98,8 @@ struct RenderSettings {
 
 class MapRenderer {
 public:
+    MapRenderer() = default;
+
     MapRenderer(const RenderSettings& render_settings)
         : render_settings_(render_settings)
     {}
@@ -108,6 +110,8 @@ public:
     std::vector<svg::Text> GetStopsLabels(const std::map<std::string_view, const transport::Stop*>& stops, const SphereProjector& sp) const;
 
     svg::Document GetSVG(const std::map<std::string_view, const transport::Bus*>& buses) const;
+
+    const RenderSettings GetRenderSettings() const;
 
 private:
     const RenderSettings render_settings_;

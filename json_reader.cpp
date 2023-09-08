@@ -23,6 +23,11 @@ const json::Node& JsonReader::GetRoutingSettings() const {
     return input_.GetRoot().AsDict().at("routing_settings"s);
 }
 
+const json::Node& JsonReader::GetSerializationSettings() const {
+    if (!input_.GetRoot().AsDict().count("serialization_settings"s)) return dummy_;
+    return input_.GetRoot().AsDict().at("serialization_settings"s);
+}
+
 void JsonReader::ProcessRequests(const json::Node& stat_requests, RequestHandler& rh) const {
     json::Array result;
     for (auto& request : stat_requests.AsArray()) {
