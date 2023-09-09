@@ -98,7 +98,7 @@ struct RenderSettings {
 
 class MapRenderer {
 public:
-    MapRenderer() = default;
+    MapRenderer() {}
 
     MapRenderer(const RenderSettings& render_settings)
         : render_settings_(render_settings)

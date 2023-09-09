@@ -70,4 +70,12 @@ const graph::DirectedWeightedGraph<double>& Router::GetGraph() const {
 	return graph_;
 }
 
+const int Router::GetBusWaitTime() const {
+    return bus_wait_time_;
+}
+
+const double Router::GetBusVelocity() const {
+    return bus_velocity_;
+}
+
 }

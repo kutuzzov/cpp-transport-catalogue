@@ -27,13 +27,13 @@ int main(int argc, char* argv[]) {
 
         //const auto& routing_settings = json_input.FillRoutingSettings(json_input.GetRoutingSettings());
         //const transport::Router router = { routing_settings, catalogue };
-        //const auto& render_settings = json_input.GetRenderSettings();
-        //const auto& renderer = json_input.FillRenderSettings(render_settings);
+        const auto& render_settings = json_input.GetRenderSettings();
+        const renderer::MapRenderer renderer = json_input.FillRenderSettings(render_settings);
         const auto& serialization_settings = json_input.GetSerializationSettings();
         
         std::ofstream fout(serialization_settings.AsDict().at("file"s).AsString(), std::ios::binary);
         if (fout.is_open()) {
-            serialization::Serialize(catalogue, fout);
+            serialization::Serialize(catalogue, renderer, fout);
         }
 }
     else if (mode == "process_requests"sv) {

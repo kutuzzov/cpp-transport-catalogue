@@ -24,6 +24,8 @@ public:
 	const graph::DirectedWeightedGraph<double>& BuildGraph(const Catalogue& catalogue);
 	const std::optional<graph::Router<double>::RouteInfo> FindRoute(const std::string_view stop_from, const std::string_view stop_to) const;
 	const graph::DirectedWeightedGraph<double>& GetGraph() const;
+    const int GetBusWaitTime() const;
+    const double GetBusVelocity() const;
 
 private:
 	int bus_wait_time_ = 0;
@@ -34,4 +36,4 @@ private:
 	std::unique_ptr<graph::Router<double>> router_;
 };
 
-}
+} // namespace transport

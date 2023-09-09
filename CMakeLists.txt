@@ -13,7 +13,7 @@ find_package(Threads REQUIRED)
 # Команда вызова protoc. 
 # Ей переданы названия переменных, в которые будут сохранены 
 # списки сгенерированных файлов, а также сам proto-файл.
-protobuf_generate_cpp(PROTO_SRCS PROTO_HDRS transport_catalogue.proto)
+protobuf_generate_cpp(PROTO_SRCS PROTO_HDRS transport_catalogue.proto map_renderer.proto svg.proto)
 
 # добавляем цель - transport_catalogue
 add_executable(transport_catalogue ${PROTO_SRCS} ${PROTO_HDRS} main.cpp domain.cpp geo.cpp json.cpp json_builder.cpp json_reader.cpp map_renderer.cpp request_handler.cpp svg.cpp transport_catalogue.cpp transport_router.cpp serialization.cpp domain.h geo.h graph.h json.h json_builder.h json_reader.h map_renderer.h ranges.h request_handler.h router.h svg.h transport_catalogue.h transport_router.h serialization.h)
