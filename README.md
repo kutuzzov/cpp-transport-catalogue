@@ -222,7 +222,7 @@ cmake --build .
 } 
 ```
 Ключ `map` — строка с изображением карты в формате `SVG`
-![image](https://github.com/kutuzzov/cpp-search-server/blob/main/route.png)
+![image](https://github.com/kutuzzov/cpp-transport-catalogue/blob/master/route.png)
 
 
 ### Запрос на построение маршрута между двумя остановками
