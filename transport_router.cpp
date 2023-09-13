@@ -3,9 +3,9 @@
 namespace transport {
 
 const graph::DirectedWeightedGraph<double>& Router::BuildGraph(const Catalogue& catalogue) {
-	const auto& all_stops = catalogue.GetSortedAllStops();
-	const auto& all_buses = catalogue.GetSortedAllBuses();
-	graph::DirectedWeightedGraph<double> stops_graph(all_stops.size() * 2);
+    const auto& all_stops = catalogue.GetSortedAllStops();
+    const auto& all_buses = catalogue.GetSortedAllBuses();
+    graph::DirectedWeightedGraph<double> stops_graph(all_stops.size() * 2);
     std::map<std::string, graph::VertexId> stop_ids;
     graph::VertexId vertex_id = 0;
 
@@ -63,11 +63,17 @@ const graph::DirectedWeightedGraph<double>& Router::BuildGraph(const Catalogue& 
 }
 
 const std::optional<graph::Router<double>::RouteInfo> Router::FindRoute(const std::string_view stop_from, const std::string_view stop_to) const {
-	return router_->BuildRoute(stop_ids_.at(std::string(stop_from)),stop_ids_.at(std::string(stop_to)));
+    return router_->BuildRoute(stop_ids_.at(std::string(stop_from)),stop_ids_.at(std::string(stop_to)));
 }
 
 const graph::DirectedWeightedGraph<double>& Router::GetGraph() const {
-	return graph_;
+    return graph_;
+}
+
+void Router::SetGraph(const graph::DirectedWeightedGraph<double> graph, const std::map<std::string, graph::VertexId> stop_ids) {
+    graph_ = graph;
+    stop_ids_ = stop_ids;
+    router_ = std::make_unique<graph::Router<double>>(graph_);
 }
 
 const int Router::GetBusWaitTime() const {
@@ -78,4 +84,12 @@ const double Router::GetBusVelocity() const {
     return bus_velocity_;
 }
 
+const Router Router::GetRouterSettings() const {
+    return { bus_wait_time_, bus_velocity_ };
 }
+
+const std::map<std::string, graph::VertexId> Router::GetStopIds() const {
+    return stop_ids_;
+}
+
+} // namespace transport

@@ -3,6 +3,7 @@ syntax = "proto3";
 package proto_transport;
 
 import "map_renderer.proto";
+import "transport_router.proto";
 
 message Coordinates {
     double lat = 1;
@@ -34,15 +35,10 @@ message StopDistanses {
     int32 distance = 3;
 }
 
-message RouterSettings {
-    int32 bus_wait_time = 1;
-    double bus_velocity = 2;
-}
-
 message TransportCatalogue {
     repeated Bus buses = 1;
     repeated Stop stops = 2;
     repeated StopDistanses stop_distances = 3;
     proto_map.RenderSettings render_settings = 4;
-    RouterSettings router_settings = 5;
+    Router router = 5;
 }

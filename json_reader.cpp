@@ -152,7 +152,7 @@ renderer::MapRenderer JsonReader::FillRenderSettings(const json::Node& settings)
 }
 
 transport::Router JsonReader::FillRoutingSettings(const json::Node& settings) const {
-    transport::Router routing_settings;
+    //transport::Router routing_settings;
     return transport::Router{ settings.AsDict().at("bus_wait_time"s).AsInt(), settings.AsDict().at("bus_velocity"s).AsDouble() };
 }
 
