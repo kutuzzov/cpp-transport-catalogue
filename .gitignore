@@ -12,6 +12,8 @@
 *.sln
 *.vcxproj*
 *.xcodeproj
+*.git*
+*.md
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
